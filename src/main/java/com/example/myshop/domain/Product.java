@@ -3,9 +3,14 @@ package com.example.myshop.domain;
 
 import org.hibernate.validator.constraints.URL;
 
+
 import javax.persistence.*;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.io.IOException;
+
 
 @Entity
 public class Product {
@@ -17,11 +22,10 @@ public class Product {
     @NotBlank(message = "Поле не может быть пустым")
     private String productName;
     private String productSize;
-
-
+    private  String photo;
     private int quantity;
-    @NotBlank(message = "Поле не может быть пустым")
-    private String productPrice;
+
+    private Double productPrice;
     @NotBlank(message = "Поле не может быть пустым")
     @URL(message = "Не правильный формат")
     private String productLink;
@@ -36,13 +40,38 @@ public class Product {
     }
 
 
-    public Product( String productName, String productSize, int quantity, String productPrice, String productLink , User customer) {
+    public Product( String productName, String photo, String productSize, int quantity, Double productPrice, String productLink , User customer) {
         this.productName = productName;
+        this.photo = photo;
         this.productSize = productSize;
         this.quantity = quantity;
         this.productPrice = productPrice;
         this.productLink = productLink;
         this.customer = customer;
+    }
+
+    public Product link(String link) throws IOException {
+
+
+
+        Document page = Jsoup.parse(new java.net.URL(link),10000);
+
+
+        Element cart = page.select("div[class = card-fulldesktop]").first();
+        String name = cart.select("h1[class = cart_information_title]").first().text();
+       // String art = cart.select("span[class=card-article_text]").first().text();
+        Element relHref = page.select("li[class = cart_foto_list_item productCard__active]").first();
+        String  photo= relHref.select("a").attr("href");
+
+        // System.out.println(relHref);
+
+        String[] price = cart.select("span[class=cart_information_list_item__new]").first().ownText().split(" ");
+
+        Double price1 = Double.parseDouble(price[0]);
+
+        Product product = new Product(name, photo, "", 1, price1, link, customer);
+
+        return product;
     }
 
     public String getCustomerName(){
@@ -97,12 +126,34 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public String getProductPrice() {
+    public Double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(String productPrice) {
+    public void setProductPrice(Double productPrice) {
         this.productPrice = productPrice;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productName='" + productName + '\'' +
+                ", photo='" + photo + '\'' +
+                ", productSize='" + productSize + '\'' +
+                ", quantity=" + quantity +
+                ", productPrice='" + productPrice + '\'' +
+                ", productLink='" + productLink + '\'' +
+                '}';
     }
 
 

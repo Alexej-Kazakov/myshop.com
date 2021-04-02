@@ -1,7 +1,7 @@
 <#import "parts/_common.ftlh" as c>
 
 <@c.page>
-    <h5> Имя пользователя: ${username}</h5>
+    <h5 xmlns="http://www.w3.org/1999/html"> Имя пользователя: ${username}</h5>
     ${message?ifExists}
     <form method="post">
         <div class="form-group row">
@@ -19,7 +19,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" >Телефон:</label>
             <div class="col-sm-6">
-                <input type="phone" name="phone" class="form-control" placeholder="Номер телефона" value="${phone!''}" />
+                <input type="text" name="phone" class="form-control" placeholder="Номер телефона" value="${phone!''}" />
             </div>
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}" />

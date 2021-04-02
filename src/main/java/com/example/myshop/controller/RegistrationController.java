@@ -73,8 +73,6 @@ public class RegistrationController {
             model.addAttribute("usernameError", "Пользователь с таким именем уже зарегистрирован");
             return "registration";
         }
-
         return "redirect:/login";
     }
-
 }

@@ -52,13 +52,13 @@
                         </div>
                     </#if>
                 </div>
-
             </div>
+
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Телефон:</label>
                 <div class="col-sm-6">
-                    <input type="phone" name="phone" value="<#if user??>${user.phone}</#if>"
-                           class="form-control ${(phoneError??)?string('is-invalid', '')}"/>
+                    <input type="text" name="phone" value="<#if user??>${user.phone}</#if>"
+                           class=" form-control ${(phoneError??)?string('is-invalid', '')}"/>
                     <#if phoneError??>
                         <div class="invalid-feedback">
                             ${phoneError}
@@ -80,7 +80,6 @@
         <button class="btn btn-primary" type="submit"><#if isRegisterForm>Зарегистрироваться<#else>Войти</#if></button>
     </form>
 </#macro>
-
 <#macro logout>
     <form action="/logout" method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}" />

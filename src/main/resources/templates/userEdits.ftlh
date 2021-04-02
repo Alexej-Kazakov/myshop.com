@@ -19,10 +19,11 @@
                 </div>
             </div>
 
+
             <div class="form-group row">
                 <label class="col-sm-2 form-label"> Телефон:  </label>
                 <div class="col-sm-6">
-                    <input type="text" name="phone" value="<#if user??> ${user.phone}</#if>"
+                    <input name="phone" value="<#if user??> ${user.phone}</#if>"
                            class="form-control ${(phoneError??)?string('is-invalid', '')}" placeholder="Номер телефона"/>
                     <#if phoneError??>
                         <div class="invalid-feedback">
@@ -46,7 +47,6 @@
                 </div>
             </div>
 
-
             <#list roles as role>
                 <div>
                     <label><input type="checkbox" name="${role}" ${user.roles?seq_contains(role)?string("checked", "")}>${role}</label>
@@ -58,6 +58,7 @@
 
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <button class="btn btn-primary" type="submit">Изменить</button>
+
 
         </form>
     </div>
